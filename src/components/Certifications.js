@@ -40,9 +40,9 @@ const Certifications = ({ certifications }) => {
                 }}
               >
                 <CardContent>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <WorkspacePremiumIcon color="primary" sx={{ mr: 1 }} />
-                    <Typography variant="h6" component="div">
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 0 }}>
+                    <WorkspacePremiumIcon color="primary" sx={{ mr: 2 }} />
+                    <Typography variant="body1" component="div">
                       {cert}
                     </Typography>
                   </Box>

@@ -13,14 +13,14 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 
 const sections = [
-  { id: 'about', label: 'About' },
+  { id: 'basic', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'education', label: 'Education' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
   { id: 'certifications', label: 'Certifications' },
-  { id: 'languages', label: 'Languages' },
-  { id: 'honors', label: 'Honors' },
+  { id: 'language', label: 'Languages' },
+  { id: 'honor', label: 'Honors' },
   { id: 'contact', label: 'Contact' },
 ];
 

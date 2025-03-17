@@ -12,8 +12,15 @@ import {
   Drawer,
   useTheme,
   useMediaQuery,
+  Chip,
+  Link,
+  Accordion,
+  AccordionDetails,
+  AccordionActions,
+  AccordionSummary,
+  Collapse,
 } from '@mui/material';
-import { Send, Chat as ChatIcon, Close, RefreshOutlined } from '@mui/icons-material';
+import { Send, Chat as ChatIcon, Close, RefreshOutlined, Expand, ArrowDownward, KeyboardArrowDown } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import AIHandler from '../utils/AIHandler';
 import { trackChatMessage, trackEvent } from '../utils/analytics';
@@ -49,7 +56,7 @@ const Chat = ({ profile, open, onClose }) => {
   // Handle streaming responses
   useEffect(() => {
     const handleStreamingResponse = (event) => {
-      const { content, done } = event.detail;
+      const { content, done, sections } = event.detail;
       
       setMessages(prev => {
         const newMessages = [...prev];
@@ -59,6 +66,7 @@ const Chat = ({ profile, open, onClose }) => {
           newMessages[newMessages.length - 1] = {
             ...lastMessage,
             text: content,
+            sections,
             streaming: !done
           };
         }
@@ -287,6 +295,42 @@ const Chat = ({ profile, open, onClose }) => {
                           >
                             ▋
                           </Box>
+                        )}
+                        {message.sections && (
+                          <Accordion
+                            component={Box} 
+                            elevation={0} 
+                            sx={{
+                              mt: 1, bgcolor: 'transparent', 
+                              p: 0, 
+                              '&:hover': {
+                                cursor: 'pointer',
+                              },
+                            }} 
+                            size="small"
+                          >
+                            <AccordionSummary sx={{ p: 0, m: 0 }} expandIcon={<KeyboardArrowDown fontSize={"small"} />}>Reference</AccordionSummary>
+                            <AccordionDetails sx={{ p: 0, m: 0 }}>
+                              {message?.sections?.map((section, index) => (
+                                <Chip
+                                  key={index}
+                                  label={section.type}
+                                  size='small'
+                                  component={Link}
+                                  href={`#${section.type}`}
+                                  target="_self"
+                                  rel="noopener noreferrer"
+                                  sx={{
+                                    mr: 1,
+                                    mb: 0.5,
+                                    '&:hover': {
+                                      cursor: 'pointer',
+                                    },
+                                  }}
+                                />
+                              ))}
+                            </AccordionDetails>
+                          </Accordion>
                         )}
                       </Typography>
                     </Paper>

@@ -230,12 +230,12 @@ class AIHandler {
       const context = topSections.map(s => s.content).join('\n\n');
 
       // Step 7: Combine context and generate response
-      const response = await this.generateSmartResponse(query, context, sectionScores, profileData);
+      const response = await this.generateSmartResponse(query, context, sectionScores, profileData, topSections);
       
       // Step 8: Update conversation history
       this.conversationHistory.push(
         { role: 'user', content: query },
-        { role: 'assistant', content: response }
+        { role: 'assistant', content: response, sections }
       );
       
       // Keep conversation history focused (last 4 exchanges = 8 messages)
@@ -258,7 +258,7 @@ class AIHandler {
    * @param {object} profileData - User profile data
    * @returns {string} - Generated response
    */
-  static async generateSmartResponse(query, context, sectionScores, profileData) {
+  static async generateSmartResponse(query, context, sectionScores, profileData, topSections) {
     try {
       console.log('Generating LLM response...');
       const { basics } = profileData;
@@ -269,7 +269,7 @@ class AIHandler {
         const prompt = await this.preparePromptForLLM(query, context, profileData);
         
         // Generate response using LLM
-        const llmResponse = await this.generateWithLLM(prompt, profileData);
+        const llmResponse = await this.generateWithLLM(prompt, topSections);
         if (llmResponse && llmResponse.trim()) {
           return llmResponse;
         }
@@ -375,7 +375,7 @@ class AIHandler {
    * @param {object} profileData - User profile data
    * @returns {Promise<string>} - Generated response
     */
-  static async generateWithLLM(prompt) {
+  static async generateWithLLM(prompt, sections) {
     try {
       const chatModule = await this.getChatModule();
       
@@ -423,6 +423,7 @@ class AIHandler {
         const finalEvent = new CustomEvent('chatStreamingResponse', { 
           detail: { 
             content: cleanedResponse,
+            sections,
             done: true
           }
         });

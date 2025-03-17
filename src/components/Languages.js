@@ -22,7 +22,7 @@ const Languages = ({ languages }) => {
   };
 
   return (
-    <Box component="section" id="languages" sx={{ py: 8 }}>
+    <Box component="section" id="language" sx={{ py: 8 }}>
       <Typography
         variant="h4"
         component="h2"
