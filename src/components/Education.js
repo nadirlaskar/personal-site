@@ -27,6 +27,7 @@ const Education = ({ education }) => {
               viewport={{ once: true }}
             >
               <Card
+                id={`education-${edu.degree}`}
                 elevation={2}
                 sx={{
                   height: '100%',

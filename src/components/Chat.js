@@ -314,10 +314,10 @@ const Chat = ({ profile, open, onClose }) => {
                               {message?.sections?.map((section, index) => (
                                 <Chip
                                   key={index}
-                                  label={section.type}
+                                  label={section.id?.split('-').join(' ') ?? section.title}
                                   size='small'
                                   component={Link}
-                                  href={`#${section.type}`}
+                                  href={`#${section.id}`}
                                   target="_self"
                                   rel="noopener noreferrer"
                                   sx={{

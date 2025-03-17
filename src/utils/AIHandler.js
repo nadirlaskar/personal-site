@@ -167,19 +167,22 @@ class AIHandler {
       const { basics, skills, projects, experience, education, certifications, honors, languages } = profileData;
       
       const sections = [
-        { type: 'basics', content: `My name is ${basics.name}. I am a ${basics.title} based in ${basics.location}. ${basics.bio}` },
-        { type: 'contact', content: `You can contact me at ${basics.email}. My GitHub is ${basics.github} and LinkedIn is ${basics.linkedin}.` },
+        { id: 'basics', type: 'basics', content: `My name is ${basics.name}. I am a ${basics.title} based in ${basics.location}. ${basics.bio}` },
+        { id: 'contact', type: 'contact', content: `You can contact me at ${basics.email}. My GitHub is ${basics.github} and LinkedIn is ${basics.linkedin}.` },
         ...skills.map(category => ({ 
+          id: `skill-${category.category}`,
           type: 'skills', 
           category: category.category,
           content: `In ${category.category}, I am skilled in: ${category.items.join(', ')}` 
         })),
         ...projects.map(project => ({ 
+          id: `project-${project.title}`,
           type: 'project', 
           title: project.title,
           content: `${project.title}: ${project.description} (Technologies used: ${project.technologies.join(', ')})` 
         })),
         ...experience.map(exp => ({ 
+          id: `experience-${exp.company}`,
           type: 'experience', 
           company: exp.company,
           position: exp.position,
@@ -187,21 +190,25 @@ class AIHandler {
           content: `${exp.position} at ${exp.company} (${exp.duration}): ${exp.description}` 
         })),
         ...education.map(edu => ({ 
+          id: `education-${edu.degree}`,
           type: 'education', 
           institution: edu.institution,
           content: `${edu.degree} from ${edu.institution} (${edu.duration})` 
         })),
         ...certifications.map(cert => ({ 
+          id: `certification-${cert}`,
           type: 'certification', 
           title: cert,
           content: cert,
         })),
         ...honors.map(honor => ({ 
+          id: `honor-${honor}`,
           type: 'honor', 
           title: honor,
           content: honor,
         })),
         ...languages.map(lang => ({ 
+          id: `language-${lang.name}`,
           type: 'language', 
           name: lang.name,
           level: lang.level,

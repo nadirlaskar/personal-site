@@ -22,7 +22,7 @@ const Languages = ({ languages }) => {
   };
 
   return (
-    <Box component="section" id="language" sx={{ py: 8 }}>
+    <Box component="section" id="languages" sx={{ py: 8 }}>
       <Typography
         variant="h4"
         component="h2"
@@ -36,6 +36,7 @@ const Languages = ({ languages }) => {
         {languages.map((lang, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <motion.div
+              id={`language-${lang.name}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}

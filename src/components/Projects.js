@@ -39,7 +39,7 @@ const Projects = ({ projects }) => {
                 image={project.image}
                 alt={project.title}
               />
-              <CardContent sx={{ flexGrow: 1 }}>
+              <CardContent sx={{ flexGrow: 1 }} id={`project-${project.title}`}>
                 <Typography gutterBottom variant="h5" component="h3">
                   {project.title}
                 </Typography>

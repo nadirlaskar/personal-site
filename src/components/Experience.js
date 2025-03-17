@@ -9,7 +9,7 @@ const Experience = ({ experience }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box component="section" id="experience" sx={{ py: 8 }}>
+    <Box component="section" id="experiences" sx={{ py: 8 }}>
       <Typography
         variant="h4"
         component="h2"
@@ -70,12 +70,13 @@ const Experience = ({ experience }) => {
             </TimelineSeparator>
             <TimelineContent>
               <motion.div
+                id={`experience-${exp.company}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card 
+                <Card
                   elevation={1}
                   sx={{
                     bgcolor: theme.palette.mode === 'dark' ? 'background.paper' : 'background.default',

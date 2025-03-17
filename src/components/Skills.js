@@ -25,6 +25,7 @@ const Skills = ({ skills }) => {
         {skills.map((category, index) => (
           <Grid item xs={12} md={4} key={index}>
             <Paper
+            id={`skill-${category.category}`}
               elevation={2}
               sx={{
                 p: 3,
