@@ -1,0 +1,84 @@
+{
+  "basics": {
+    "name": "Nadir Hussain Laskar",
+    "title": "Software Development Team Lead",
+    "bio": "A creative entrepreneurial developer with expertise in AI, Blockchain, Web, VR/AR, and Full-stack development. Currently leading development of low code platform with voice interface.",
+    "email": "nadirlaskar@gmail.com",
+    "location": "Bengaluru, India",
+    "avatar": "https://avatars.githubusercontent.com/u/142401224?s=512&v=4",
+    "social": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/nadirlaskar",
+        "icon": "github"
+      },
+      {
+        "name": "LinkedIn",
+        "url": "https://linkedin.com/in/nadirlaskar",
+        "icon": "linkedin"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "category": "Frontend",
+      "items": ["React", "TypeScript", "Single SPA", "HTML5", "CSS3", "Component Libraries"]
+    },
+    {
+      "category": "Backend",
+      "items": ["Node.js", "AWS Lambda", "Sequelize ORM", "Python"]
+    },
+    {
+      "category": "Technologies",
+      "items": ["AI", "Blockchain", "VR/AR", "OSS", "Android"]
+    },
+    {
+      "category": "Tools & Others",
+      "items": ["Git", "AWS Services", "Agile", "Team Leadership"]
+    }
+  ],
+  "projects": [
+    {
+      "title": "ReactJS Components Library",
+      "description": "Developed a comprehensive components library in ReactJS to streamline development process and improve code reusability across projects.",
+      "technologies": ["React", "TypeScript", "Storybook", "CSS-in-JS"],
+      "github": "https://github.com/nadirlaskar/react-components",
+      "image": "https://picsum.photos/seed/react-components/300/200"
+    },
+    {
+      "title": "Low Code Platform with Voice Interface",
+      "description": "Leading the development of an innovative low code platform that incorporates voice interface for enhanced user interaction and productivity.",
+      "technologies": ["React", "Node.js", "AWS", "Voice Recognition"],
+      "demo": "https://lowcode-platform-demo.com",
+      "image": "https://picsum.photos/seed/low-code/300/200"
+    },
+    {
+      "title": "Micro-Frontend Architecture",
+      "description": "Implemented a micro-frontend architecture using Single SPA framework to create more maintainable and scalable web applications.",
+      "technologies": ["Single SPA", "React", "TypeScript", "AWS"],
+      "github": "https://github.com/nadirlaskar/micro-frontend-demo",
+      "image": "https://picsum.photos/seed/micro-frontend/300/200"
+    }
+  ],
+  "experience": [
+    {
+      "company": "ZAGENO Inc",
+      "position": "Software Development Team Lead",
+      "duration": "2022 - Present",
+      "description": "Leading the development of a low code platform with voice interface, managing team of developers, and implementing micro-frontend architecture using Single SPA."
+    },
+    {
+      "company": "Previous Experience",
+      "position": "Full Stack Developer",
+      "duration": "2018 - 2022",
+      "description": "Developed full-stack web applications using ReactJS, NodeJS, and AWS services. Created reusable component libraries and implemented best practices for code quality."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Advanced Software Engineering",
+      "institution": "Scaler Academy",
+      "duration": "2021 - 2022"
+    }
+  ]
+}
