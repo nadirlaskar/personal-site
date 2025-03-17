@@ -2,7 +2,7 @@
   "basics": {
     "name": "Nadir Hussain Laskar",
     "title": "Software Development Team Lead",
-    "bio": "A creative entrepreneurial developer with expertise in AI, Blockchain, Web, VR/AR, and Full-stack development. Currently leading development of low code platform with voice interface.",
+    "bio": "Building Search @ ZAGENO | Powered by ML | WebML | Cloud Native | Lucene | Domain Driven Design. Expertise in AI, Blockchain, Web, VR/AR, and Full-stack development.",
     "email": "nadirlaskar@gmail.com",
     "location": "Bengaluru, India",
     "avatar": "https://avatars.githubusercontent.com/u/142401224?s=512&v=4",
@@ -14,7 +14,7 @@
       },
       {
         "name": "LinkedIn",
-        "url": "https://linkedin.com/in/nadirlaskar",
+        "url": "https://www.linkedin.com/in/nadirlaskar",
         "icon": "linkedin"
       }
     ]
@@ -30,11 +30,11 @@
     },
     {
       "category": "Technologies",
-      "items": ["AI", "Blockchain", "VR/AR", "OSS", "Android"]
+      "items": ["AI", "Blockchain", "VR/AR", "OSS", "Android", "Lucene", "Microservices"]
     },
     {
       "category": "Tools & Others",
-      "items": ["Git", "AWS Services", "Agile", "Team Leadership"]
+      "items": ["Git", "AWS Services", "Agile", "Team Leadership", "Domain Driven Design"]
     }
   ],
   "projects": [
@@ -47,9 +47,8 @@
     },
     {
       "title": "Low Code Platform with Voice Interface",
-      "description": "Leading the development of an innovative low code platform that incorporates voice interface for enhanced user interaction and productivity.",
+      "description": "Led the development of an innovative low code platform that incorporates voice interface for enhanced user interaction and productivity.",
       "technologies": ["React", "Node.js", "AWS", "Voice Recognition"],
-      "demo": "https://lowcode-platform-demo.com",
       "image": "https://picsum.photos/seed/low-code/300/200"
     },
     {
@@ -64,21 +63,61 @@
     {
       "company": "ZAGENO Inc",
       "position": "Software Development Team Lead",
-      "duration": "2022 - Present",
-      "description": "Leading the development of a low code platform with voice interface, managing team of developers, and implementing micro-frontend architecture using Single SPA."
+      "duration": "January 2024 - Present",
+      "description": "Leading the development of search infrastructure, integrating ML and WebML solutions, and leveraging cloud-native architectures."
     },
     {
-      "company": "Previous Experience",
-      "position": "Full Stack Developer",
-      "duration": "2018 - 2022",
-      "description": "Developed full-stack web applications using ReactJS, NodeJS, and AWS services. Created reusable component libraries and implemented best practices for code quality."
+      "company": "ZAGENO Inc",
+      "position": "Software Development Engineer III",
+      "duration": "August 2023 - January 2024",
+      "description": "Developed micro-frontend solutions, optimized search functionalities, and contributed to scalable infrastructure."
+    },
+    {
+      "company": "Telio",
+      "position": "Software Development Engineer II",
+      "duration": "January 2021 - August 2023",
+      "description": "Worked on B2B solutions, core feature development, and micro-frontend architecture for order management."
+    },
+    {
+      "company": "Infrrd",
+      "position": "Senior Software Engineer",
+      "duration": "January 2020 - December 2020",
+      "description": "Implemented AI-driven automation solutions and worked on full-stack application development."
+    },
+    {
+      "company": "SLK",
+      "position": "Engineer",
+      "duration": "January 2019 - January 2020",
+      "description": "Developed a location tracking system using proprietary hardware and WiFi fingerprinting."
     }
   ],
   "education": [
     {
-      "degree": "Advanced Software Engineering",
+      "degree": "Data Structures and Algorithms",
       "institution": "Scaler Academy",
-      "duration": "2021 - 2022"
+      "duration": "February 2020 - December 2021"
+    },
+    {
+      "degree": "Bachelor's degree, Computer Science",
+      "institution": "Assam University",
+      "duration": "2016 - 2018"
     }
+  ],
+  "certifications": [
+    "Advanced RAG Applications with Vector Databases",
+    "Generative AI: The Evolution of Thoughtful Online Search",
+    "Ethics in the Age of Generative AI",
+    "Introduction to Artificial Intelligence",
+    "Career Essentials in Generative AI by Microsoft and LinkedIn"
+  ],
+  "languages": [
+    { "name": "Bengali", "level": "Native or Bilingual" },
+    { "name": "English", "level": "Professional Working" },
+    { "name": "Hindi", "level": "Professional Working" }
+  ],
+  "honors": [
+    "Anandaram Barua Award",
+    "Zonal Winner Networking Workshop",
+    "Zonal Winner Ethical Hacking Workshop"
   ]
 }

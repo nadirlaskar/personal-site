@@ -13,7 +13,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { Send, Chat as ChatIcon, Close } from '@mui/icons-material';
+import { Send, Chat as ChatIcon, Close, RefreshOutlined } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import AIHandler from '../utils/AIHandler';
 import { trackChatMessage, trackEvent } from '../utils/analytics';
@@ -24,6 +24,7 @@ const Chat = ({ profile, open, onClose }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [modelLoading, setModelLoading] = useState({ loading: false, progress: 0, status: '' });
   const messagesEndRef = useRef(null);
   
   const scrollToBottom = () => {
@@ -34,58 +35,101 @@ const Chat = ({ profile, open, onClose }) => {
     scrollToBottom();
   }, [messages]);
 
+  // Listen for chat loading state changes
+  useEffect(() => {
+    const handleLoadingStateChange = (event) => {
+      setModelLoading(event.detail);
+    };
+    window.addEventListener('chatLoadingStateChange', handleLoadingStateChange);
+    return () => {
+      window.removeEventListener('chatLoadingStateChange', handleLoadingStateChange);
+    };
+  }, []);
+
+  // Handle streaming responses
+  useEffect(() => {
+    const handleStreamingResponse = (event) => {
+      const { content, done } = event.detail;
+      
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastMessage = newMessages[newMessages.length - 1];
+        
+        if (lastMessage && lastMessage.sender === 'bot') {
+          newMessages[newMessages.length - 1] = {
+            ...lastMessage,
+            text: content,
+            streaming: !done
+          };
+        }
+        
+        return newMessages;
+      });
+      
+      if (done) {
+        setIsGenerating(false);
+      }
+    };
+    
+    window.addEventListener('chatStreamingResponse', handleStreamingResponse);
+    return () => window.removeEventListener('chatStreamingResponse', handleStreamingResponse);
+  }, []);
+
   const generateResponse = useCallback(async (query) => {
     setIsGenerating(true);
     try {
-      const response = await AIHandler.generateResponse(query, profile);
-      return response;
+      // Add placeholder message for streaming response
+      setMessages(prev => [...prev, { 
+        sender: 'bot', 
+        text: '',
+        streaming: true,
+        timestamp: new Date().toISOString()
+      }]);
+
+      await AIHandler.generateResponse(query, profile);
     } catch (error) {
       console.error('Error generating response:', error);
-      return `I apologize, but I'm having trouble generating a response. Please try asking a different question about ${profile.basics.name}'s background, skills, or experience.`;
-    } finally {
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastMessage = newMessages[newMessages.length - 1];
+        if (lastMessage && lastMessage.sender === 'bot') {
+          lastMessage.text = `I apologize, but I'm having trouble generating a response. Please try asking a different question about ${profile.basics.name}'s background, skills, or experience.`;
+          lastMessage.streaming = false;
+        }
+        return newMessages;
+      });
       setIsGenerating(false);
     }
   }, [profile]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isGenerating || modelLoading.loading) return;
 
+    const currentInput = input.trim();
     const userMessage = {
-      text: input,
+      text: currentInput,
       sender: 'user',
       timestamp: new Date().toISOString(),
     };
 
-    // Track user message in GA
-    trackChatMessage('user', input);
-
-    setMessages(prev => [...prev, userMessage]);
+    // Clear input immediately for better UX
     setInput('');
 
+    // Add user message to chat
+    setMessages(prev => [...prev, userMessage]);
+
+    // Track user message in GA
+    trackChatMessage('user_message', currentInput);
+
     try {
-      const response = await generateResponse(input);
-      const botMessage = {
-        text: response,
-        sender: 'bot',
-        timestamp: new Date().toISOString(),
-      };
-
-      // Track AI response in GA
-      trackChatMessage('ai', response);
-
-      setMessages(prev => [...prev, botMessage]);
+      // Generate response (streaming will handle bot message)
+      await generateResponse(currentInput);
+      // Track completion in GA
+      trackEvent('Chat', 'ResponseComplete', 'Success');
     } catch (error) {
       console.error('Error in chat response:', error);
-      const errorMessage = {
-        text: 'I apologize, but I encountered an error. Please try asking your question again.',
-        sender: 'bot',
-        timestamp: new Date().toISOString(),
-      };
-      
-      // Track error in GA
+      // Error handling is now done in generateResponse
       trackEvent('Chat', 'Error', error.message || 'Unknown error');
-      
-      setMessages(prev => [...prev, errorMessage]);
     }
   };
 
@@ -119,11 +163,69 @@ const Chat = ({ profile, open, onClose }) => {
         transition={{ duration: 0.3 }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-              <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h7">Chat with {profile.basics.name}'s AI Assistant</Typography>
-                <IconButton onClick={onClose} edge="end" aria-label="close">
-                  <Close />
-                </IconButton>
+              <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: modelLoading.loading ? 1 : 0 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <ChatIcon sx={{ color: modelLoading.loading ? 'text.disabled' : 'primary.main' }} />
+                    <Typography variant="h7">{profile.basics.name}'s AI Assistant</Typography>
+                  </Box>
+                  <IconButton onClick={onClose} edge="end" aria-label="close">
+                    <Close />
+                  </IconButton>
+                </Box>
+                {modelLoading.loading && (
+                  <Box 
+                    component={motion.div}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    sx={{ width: '100%', mt: 1 }}
+                  >
+                    <Box 
+                      sx={{ 
+                        width: '100%', 
+                        bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)', 
+                        borderRadius: 1, 
+                        p: 1.5,
+                        border: 1,
+                        borderColor: 'divider'
+                      }}
+                    >
+                      <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Box 
+                          component={motion.div} 
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                          sx={{ display: 'inline-flex' }}
+                        >
+                          <RefreshOutlined fontSize="small" />
+                        </Box>
+                        {modelLoading.status}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: '100%',
+                          height: 4,
+                          bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                          borderRadius: 2,
+                          mt: 1,
+                          overflow: 'hidden',
+                        }}
+                      >
+                        <Box
+                          component={motion.div}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${modelLoading.progress * 100}%` }}
+                          transition={{ duration: 0.3 }}
+                          sx={{
+                            height: '100%',
+                            bgcolor: 'primary.main',
+                            borderRadius: 2,
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
               </Box>
 
               <List
@@ -157,6 +259,9 @@ const Chat = ({ profile, open, onClose }) => {
                     </ListItemAvatar>
                     <Paper
                       elevation={1}
+                      component={message.streaming ? motion.div : Paper}
+                      initial={message.streaming ? { opacity: 0, y: 10 } : undefined}
+                      animate={message.streaming ? { opacity: 1, y: 0 } : undefined}
                       sx={{
                         p: 1,
                         maxWidth: '70%',
@@ -172,7 +277,17 @@ const Chat = ({ profile, open, onClose }) => {
                           whiteSpace: 'pre-line',
                         }}
                       >
-                        {message.text}
+                        {message.text || (modelLoading.loading ? 'loading...' : 'typing...')}
+                        {message.streaming && (
+                          <Box
+                            component={motion.span}
+                            animate={{ opacity: [0.3, 1, 0.3] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            sx={{ display: 'inline-block', ml: 0.5 }}
+                          >
+                            ▋
+                          </Box>
+                        )}
                       </Typography>
                     </Paper>
                   </ListItem>
@@ -180,34 +295,21 @@ const Chat = ({ profile, open, onClose }) => {
                 <div ref={messagesEndRef} />
               </List>
 
-              <Box sx={{ p: 2, borderTop: 1, borderColor: 'divider', position: 'relative' }}>
-                {isGenerating && (
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      position: 'absolute',
-                      top: -20,
-                      left: 16,
-                      color: 'text.secondary',
-                    }}
-                  >
-                    AI is thinking...
-                  </Typography>
-                )}
+              <Box sx={{ p: 2, borderTop: 1, borderColor: 'divider' }}>
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Ask me anything about Nadir..."
+                  placeholder={modelLoading.loading ? 'Loading AI model...' : 'Ask me anything about Nadir...'}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  disabled={isGenerating}
+                  disabled={isGenerating || modelLoading.loading}
                   InputProps={{
                     endAdornment: (
                       <IconButton
                         onClick={handleSend}
                         color="primary"
-                        disabled={isGenerating}
+                        disabled={!input.trim() || isGenerating || modelLoading.loading}
                         sx={{ color: theme.palette.mode === 'dark' ? 'primary.light' : 'primary.main' }}
                       >
                         <Send />

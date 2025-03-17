@@ -5,6 +5,7 @@ const Hero = ({ profile }) => {
   return (
     <Box
       component={motion.div}
+      id="hero"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}

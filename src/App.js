@@ -12,6 +12,11 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
+import Experience from './components/Experience';
+import Education from './components/Education';
+import Certifications from './components/Certifications';
+import Languages from './components/Languages';
+import Honors from './components/Honors';
 import Contact from './components/Contact';
 import Chat from './components/Chat';
 
@@ -77,8 +82,13 @@ function App() {
           >
             <Hero profile={profileData.basics} />
             <About profile={profileData.basics} />
+            <Experience experience={profileData.experience} />
+            <Education education={profileData.education} />
             <Projects projects={profileData.projects} />
             <Skills skills={profileData.skills} />
+            <Certifications certifications={profileData.certifications} />
+            <Languages languages={profileData.languages} />
+            <Honors honors={profileData.honors} />
             <Contact profile={profileData.basics} />
           </motion.div>
         </Container>
