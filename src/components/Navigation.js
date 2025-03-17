@@ -113,38 +113,30 @@ const Navigation = () => {
   );
 
   return (
-    <>
-      {isMobile ? (
-        <>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={() => setMobileOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Drawer
-            anchor="left"
-            open={mobileOpen}
-            onClose={() => setMobileOpen(false)}
-            sx={{
-              '& .MuiDrawer-paper': {
-                width: 240,
-                boxSizing: 'border-box',
-                mt: '64px', // Adjust based on your header height
-              },
-            }}
-          >
-            {navigationItems}
-          </Drawer>
-        </>
-      ) : (
-        <Box sx={{ display: 'flex' }}>
+      <>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={() => setMobileOpen(true)}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Drawer
+          anchor="left"
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+          sx={{
+            '& .MuiDrawer-paper': {
+              width: 240,
+              boxSizing: 'border-box',
+              mt: '64px', // Adjust based on your header height
+            },
+          }}
+        >
           {navigationItems}
-        </Box>
-      )}
-    </>
+        </Drawer>
+      </>
   );
 };
 

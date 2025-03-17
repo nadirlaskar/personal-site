@@ -16,7 +16,7 @@ const Header = ({ profile, children }) => {
             minHeight: { xs: 64, md: 72 },
           }}
         >
-          {isMobile && <Navigation />}
+          <Navigation />
           
           <Typography 
             variant="h6" 
@@ -32,12 +32,6 @@ const Header = ({ profile, children }) => {
           >
             {profile.name}
           </Typography>
-
-          {!isMobile && (
-            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-              <Navigation />
-            </Box>
-          )}
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             {profile.social.map((item) => (
