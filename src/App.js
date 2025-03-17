@@ -16,7 +16,7 @@ import Contact from './components/Contact';
 import Chat from './components/Chat';
 
 // Google Analytics tracking ID - replace with your actual tracking ID when deploying to production
-const GA_TRACKING_ID = 'G-XXXXXXXXXX';
+const GA_TRACKING_ID = 'G-N6T8NNTJTX';
 
 function App() {
   // Check system preference for dark mode
