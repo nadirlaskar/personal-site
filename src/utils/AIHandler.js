@@ -10,7 +10,7 @@ const checkIsMobile = () => {
   return 'maxTouchPoints' in navigator && navigator.maxTouchPoints > 0;
 };
 
-const CHAT_MODEL = checkIsMobile() ? 'SmolLM2-360M-Instruct-q4f32_1-MLC' : 'Llama-3.1-8B-Instruct-q4f32_1-MLC';
+const CHAT_MODEL = checkIsMobile() ? 'SmolLM2-135M-Instruct-q4f16_1-MLC' : 'Llama-3.1-8B-Instruct-q4f32_1-MLC';
 
 const appConfig = {
     model_list: [
@@ -26,12 +26,12 @@ const appConfig = {
         },
       },
       {
-        model: "https://huggingface.co/mlc-ai/SmolLM2-360M-Instruct-q4f32_1-MLC",
-        model_id: "SmolLM2-360M-Instruct-q4f32_1-MLC",
+        model: "https://huggingface.co/mlc-ai/SmolLM2-135M-Instruct-q4f16_1-MLC",
+        model_id: "SmolLM2-135M-Instruct-q4f16_1-MLC",
         model_lib:
           webllm.modelLibURLPrefix +
           webllm.modelVersion +
-          "/SmolLM2-360M-Instruct-q4f32_1-ctx4k_cs1k-webgpu.wasm",
+          "/SmolLM2-135M-Instruct-q4f16_1-ctx4k_cs1k-webgpu.wasm",
         overrides: {
           context_window_size: 2048,
         },
