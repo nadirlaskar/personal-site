@@ -7,9 +7,8 @@ env.allowLocalModels = false;
 // Model configurations
 const EMBEDDING_MODEL = 'Xenova/all-MiniLM-L6-v2';
 const checkIsMobile = () => {
-  // check using navigator.userAgent
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+  return 'maxTouchPoints' in navigator && navigator.maxTouchPoints > 0;
+};
 
 const CHAT_MODEL = checkIsMobile() ? 'SmolLM2-360M-Instruct-q4f32_1-MLC' : 'Llama-3.1-8B-Instruct-q4f32_1-MLC';
 
