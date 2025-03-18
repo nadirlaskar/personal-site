@@ -6,7 +6,12 @@ env.allowLocalModels = false;
 
 // Model configurations
 const EMBEDDING_MODEL = 'Xenova/all-MiniLM-L6-v2';
-const CHAT_MODEL = 'Llama-3.1-8B-Instruct-q4f32_1-MLC';
+const checkIsMobile = () => {
+  // check using navigator.userAgent
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+const CHAT_MODEL = checkIsMobile() ? 'SmolLM2-360M-Instruct-q4f32_1-MLC' : 'Llama-3.1-8B-Instruct-q4f32_1-MLC';
 
 const appConfig = {
     model_list: [
@@ -17,6 +22,17 @@ const appConfig = {
           webllm.modelLibURLPrefix +
           webllm.modelVersion +
           "/Llama-3_1-8B-Instruct-q4f32_1-ctx4k_cs1k-webgpu.wasm",
+        overrides: {
+          context_window_size: 2048,
+        },
+      },
+      {
+        model: "https://huggingface.co/mlc-ai/SmolLM2-360M-Instruct-q4f32_1-MLC",
+        model_id: "SmolLM2-360M-Instruct-q4f32_1-MLC",
+        model_lib:
+          webllm.modelLibURLPrefix +
+          webllm.modelVersion +
+          "/SmolLM2-360M-Instruct-q4f32_1-ctx4k_cs1k-webgpu.wasm",
         overrides: {
           context_window_size: 2048,
         },
