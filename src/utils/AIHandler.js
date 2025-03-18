@@ -32,9 +32,6 @@ const appConfig = {
           webllm.modelLibURLPrefix +
           webllm.modelVersion +
           "/SmolLM2-135M-Instruct-q4f16_1-ctx4k_cs1k-webgpu.wasm",
-        overrides: {
-          context_window_size: 2048,
-        },
       },
       {
         model: "https://huggingface.co/mlc-ai/Llama-3.2-1B-Instruct-q4f32_1-MLC",
